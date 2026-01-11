@@ -1,6 +1,6 @@
-# How I Created and Optimised a Realtime AI Chat Messaging System
+## How I Created and Optimised a Realtime AI Chat Messaging System, during my Internship @NCS Robotics and AI team.
 
-> My latest internship project involved building an AI-driven fullstack system. A key component was a chatbot that users could use to interact with the AI.
+> My latest internship project involved building an AI-driven fullstack Resource Monitor that actively retrieves, and tracks data from an external simulator. The premise was how AI could be implemented to streamline and optimise the control of autonomous robotics systems in handling baggage transportation at airports. Thus, a key component was a chatbot that users could use to interact with the AI, and preview its judgement for more optimised scenarios of resource allocation. Apart from the chatbot, the system also featured an integrated scanning system whereby key changes (configurable by the admin) could be detected and then parsed immediately to the LangChain LangGraph AI module to generate fast analyses. This scanning feature eventually ties itself back to the chatbot where users can interact deeper with the AI regarding its preliminary analyses.
 
 ## Introduction
 
