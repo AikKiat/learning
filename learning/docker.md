@@ -1,128 +1,57 @@
 ---
-
 layout: post
-title: "From Virtual Machines to Docker Containers"
-description: "How containerisation changed software deployment"
----------------------------------------------------------------
-
-## Docker Images: A Snapshot of an Application
-
-A **Docker Image** is a snapshot of a project that includes:
-
-* Application code
-* Dependencies
-* Required libraries and frameworks
-* Assets
-* Configuration
-* Startup instructions
-
-An image serves as a **blueprint**. When executed, it becomes a **container**—a runnable instance of that image.
-
+title: From Virtual Machines to Docker Containers
+description: How containerisation changed software deployment
 ---
+### How I used Redis as a write-aside cache for my latest internship project.
 
-## The Old World: Virtual Machines
+My latest internship project involved doing up an AI-driven fullstack system. A key component was a chatbot that users could use to interact with the AI.
 
-In the past, hosting a software product was **extremely expensive**.
+I wanted to make this feature-rich as possible, of course within practical means. After all, too many features lead to too many implementations which entails a more demanding, and complicated design that can be hard to optimise later on. 
 
-Each application required a **full Virtual Machine (VM)** to be created on a host machine, running atop a **hypervisor**.
+So, I took inspiration from modern LLM chat websites such as ChatGPT, and Microsoft Copilot.
 
-### How VMs Worked
+![Screenshot 2026-01-11 185157.png]({{site.baseurl}}/learning/Screenshot 2026-01-11 185157.png)
 
-* The hypervisor operates at **kernel space**
-* It distinguishes between:
+- Above, an image of Copilot's chat interface.
 
-  * **Virtual Machine Monitors (VMMs)** — user space functionality
-  * Multiple **guest operating systems**, each fully isolated
+Therefore, consolidating all of the user-focused design features and avoiding anything superfluous, I hence summarised the key components the chat system should have:
 
-Every VM required:
+	- A button to create a new chat
+    - A sidebar to expand to show new chat titles
+    - A title displaying current chat title
+    - A main dialog area showing user's conversations with the AI
+    - A text box accepting user input and of course a simple button for submit.
+    
+So, rudimentarily considering the current context to be a single instance interaction (1 user talking to the AI), the workflow I devised was something like this:
 
-* A full operating system
-* Individual installation of all packages and dependencies
+![Screenshot 2026-01-11 191331.png]({{site.baseurl}}/learning/Screenshot 2026-01-11 191331.png)
 
-### Problems with VM-Based Deployment
 
-* ❌ **High resource overhead**
-* ❌ **Inconsistent environments** due to manual dependency installation
-* ❌ **Slow scalability** — deploying a new instance meant starting an entire VM
-* ❌ **Frequent discrepancies** between environments
+A possible user-workflow diagram can be like this:
 
----
+flowchart TD
+    A[User Opens App] --> B[User Opens Chat Tab]
 
-## The Shift: Docker and Containerisation
+    B --> C[Load Latest Chat Conversation]
 
-Docker introduced **containerisation**, fundamentally changing how software is built and deployed.
+    C --> D{User Action?}
 
-Instead of virtualising entire operating systems, Docker enables:
+    D -->|Click Sidebar| E[Expand Chat List Sidebar]
+    E --> F[Display All Chats]
 
-> Packaging multiple modules or parts of a software system into **lightweight, individually runnable environments** called **containers**.
+    F --> G{Select Existing Chat?}
+    G -->|Yes| H[Load Selected Chat Messages]
+    H --> I[User Sends Message]
+    I --> J[AI Generates Response]
+    J --> H
 
-### Containers vs VMs
+    G -->|No| K{Create New Chat?}
+    K -->|Yes| L[Create New Chat]
+    L --> M[Initialize Empty Chat]
+    M --> I
 
-* Containers share the **host OS kernel**
-* No need for a full guest operating system
-* Much faster startup time
-* Significantly lower resource usage
+    D -->|Click New Chat| L
 
-A container is simply a **running instance of an image**, meaning:
+    D -->|Send Message in Current Chat| I
 
-* One image → many containers
-* Each container behaves consistently across environments
-
----
-
-## Scaling at Scale: Container Orchestration
-
-When systems grow, containers are managed using **orchestration platforms**.
-
-### Kubernetes
-
-* Open-source container orchestration system
-* Automates:
-
-  * Deployment
-  * Scaling
-  * Networking
-  * Health management
-
-Kubernetes enables **large-scale container management**, making cloud-native architectures possible.
-
----
-
-## The Impact on Software Development
-
-Containerisation didn’t just improve infrastructure—it transformed **how software is built and released**.
-
-### Before
-
-* Developers worked on isolated parts
-* Code was merged only at the **end of development**
-* Led to:
-
-  * Messy conflicts
-  * Lost time
-  * Format and environment discrepancies
-* Software releases were **big, infrequent events**
-
-### Now
-
-* Containers enable consistent environments across teams
-* CI/CD pipelines become practical and reliable
-* Incremental updates can be:
-
-  * Rolled out quickly
-  * Tested continuously
-  * Deployed safely
-
-This marks a **huge contrast** to traditional release cycles.
-
----
-
-## Conclusion
-
-Docker and containerisation solved the inefficiencies of VM-based deployment and paved the way for:
-
-* Cloud-native systems
-* Scalable microservices
-* Modern CI/CD workflows
-
-What once required heavyweight infrastructure can now be achieved with lightweight, reproducible containers.
