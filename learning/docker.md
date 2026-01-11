@@ -29,7 +29,7 @@ So, rudimentarily considering the current context to be a single instance intera
 
 
 A possible user-workflow diagram can be like this:
-
+```mermaid
 flowchart TD
     A[User Opens App] --> B[User Opens Chat Tab]
 
@@ -54,4 +54,30 @@ flowchart TD
     D -->|Click New Chat| L
 
     D -->|Send Message in Current Chat| I
+```
+
+
+Therefore, there are some key stages where chat data need to be saved and retrieved from the data layer:
+
+> [1]: While chat window is opened:
+
+- 1. When user clicks to create a new chat, save the chat data from current conversation. Show new empty chat box to start conversations.
+
+- 2. When a user chooses to view other chats apart from the current one, save the present chat conversation first, before displaying the other chats in the main chat box.
+
+- 3. When user closes the chat window, save the chat data from the latest conversation. Since beforehand in (1) and (2) we have been saving chat data from other conversations not already marked as the present one, we do not need to do a "batch saving" of all chat conversations whenever the user closes the chatbot window.
+
+> [2]: When opening the chat window:
+
+- 1. First, we want to fetch all chat titles from the data layer. These chat titles can then be displayed on the sidebar which can be expanded or hidden. Upon opening the chat, the user is greeted with an empty chatbox depicting a brand new conversation that can be started. Same sequence as ChatGpt and Copilot.
+
+- 2. The user can then start messaging the AI **either** on this new chat, or select from the list of already saved and then retrieved chat titles for a past ongoing conversation, and continue from there. This brings us back to the brief workflows mentioned above in [1].
+
+
+### Implementing a strategy for saving data:
+
+
+    
+    
+    
 
